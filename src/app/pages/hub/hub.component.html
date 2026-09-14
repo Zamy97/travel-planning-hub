@@ -1,0 +1,401 @@
+<section class="hero">
+  <div class="hero__glow" aria-hidden="true"></div>
+  <div class="hero__inner">
+    <p class="hero__brand">Waymark</p>
+    <h1>Your travel planning hub</h1>
+    <p class="hero__lede">
+      Save places, sketch road trips, and tick off where you’ve been — all on this
+      device until you export a backup.
+    </p>
+    <div class="hero__actions">
+      <button type="button" class="btn btn--primary" (click)="openCreate()">
+        Add a spot
+      </button>
+      <a class="btn btn--ghost" href="#collection">Browse list</a>
+    </div>
+  </div>
+</section>
+
+<section class="toolbar" id="collection">
+  <div class="stats">
+    <div class="stat">
+      <span class="stat__value">{{ stats().total }}</span>
+      <span class="stat__label">Saved</span>
+    </div>
+    <div class="stat">
+      <span class="stat__value">{{ stats().planning }}</span>
+      <span class="stat__label">Planning</span>
+    </div>
+    <div class="stat">
+      <span class="stat__value">{{ stats().visited }}</span>
+      <span class="stat__label">Visited</span>
+    </div>
+    <div class="stat">
+      <span class="stat__value">{{ stats().wishlist }}</span>
+      <span class="stat__label">Wishlist</span>
+    </div>
+  </div>
+
+  <div class="controls">
+    <label class="search">
+      <span class="sr-only">Search places</span>
+      <input
+        type="search"
+        name="query"
+        placeholder="Search places, regions, notes…"
+        [ngModel]="query()"
+        (ngModelChange)="query.set($event)"
+      />
+    </label>
+
+    <div class="chips" role="group" aria-label="Filter by status">
+      @for (option of [
+        { id: 'all', label: 'All' },
+        { id: 'wishlist', label: 'Wishlist' },
+        { id: 'planning', label: 'Planning' },
+        { id: 'visited', label: 'Visited' }
+      ]; track option.id) {
+        <button
+          type="button"
+          class="chip"
+          [class.chip--active]="statusFilter() === option.id"
+          (click)="setStatusFilter($any(option.id))"
+        >
+          {{ option.label }}
+        </button>
+      }
+    </div>
+
+    <div class="chips" role="group" aria-label="Filter by type">
+      @for (option of [
+        { id: 'all', label: 'Any type' },
+        { id: 'road-trip', label: 'Road trips' },
+        { id: 'standalone', label: 'Standalone' }
+      ]; track option.id) {
+        <button
+          type="button"
+          class="chip"
+          [class.chip--active]="typeFilter() === option.id"
+          (click)="setTypeFilter($any(option.id))"
+        >
+          {{ option.label }}
+        </button>
+      }
+    </div>
+
+    <div class="data-actions">
+      <button type="button" class="btn btn--small" (click)="exportData()">
+        Export
+      </button>
+      <label class="btn btn--small btn--file">
+        Import
+        <input type="file" accept="application/json,.json" (change)="importData($event)" />
+      </label>
+      <button type="button" class="btn btn--small btn--quiet" (click)="resetSeed()">
+        Reset seed
+      </button>
+    </div>
+  </div>
+</section>
+
+@if (roadTrips().length) {
+  <section class="section">
+    <div class="section__head">
+      <h2>Multi-day road trips</h2>
+      <p>Routes you can open, mark, and refine over time.</p>
+    </div>
+    <div class="list">
+      @for (place of roadTrips(); track place.id) {
+        <article
+          class="place"
+          [class.place--open]="expandedId() === place.id"
+          [class.place--visited]="place.status === 'visited'"
+        >
+          <button
+            type="button"
+            class="place__main"
+            (click)="toggleExpand(place.id)"
+            [attr.aria-expanded]="expandedId() === place.id"
+          >
+            <div class="place__top">
+              <div>
+                <p class="place__region">{{ place.region }}</p>
+                <h3>{{ place.title }}</h3>
+              </div>
+              <span class="badge" [ngClass]="'badge--' + place.status">
+                {{ statusLabel(place.status) }}
+              </span>
+            </div>
+            <p class="place__badge-text">{{ place.badge }}</p>
+          </button>
+
+          <div class="place__actions">
+            <button type="button" class="btn btn--small" (click)="cycleStatus(place)">
+              {{
+                place.status === 'wishlist'
+                  ? 'Start planning'
+                  : place.status === 'planning'
+                    ? 'Mark visited'
+                    : 'Back to wishlist'
+              }}
+            </button>
+            <button type="button" class="btn btn--small btn--quiet" (click)="openEdit(place, $event)">
+              Edit
+            </button>
+            <button type="button" class="btn btn--small btn--quiet" (click)="deletePlace(place, $event)">
+              Remove
+            </button>
+          </div>
+
+          @if (expandedId() === place.id) {
+            <div class="place__detail">
+              @if (place.stops?.length) {
+                <ol class="stops">
+                  @for (stop of place.stops; track stop.title) {
+                    <li>
+                      <strong>{{ stop.title }}</strong>
+                      <span>{{ stop.detail }}</span>
+                    </li>
+                  }
+                </ol>
+              }
+
+              <label class="notes">
+                <span>Planning notes</span>
+                <textarea
+                  rows="3"
+                  [name]="'notes-' + place.id"
+                  [ngModel]="place.notes || ''"
+                  (ngModelChange)="saveNotes(place, $event)"
+                  placeholder="Lodging, permits, best season…"
+                ></textarea>
+              </label>
+
+              <div class="map">
+                <iframe
+                  [src]="mapUrl(place)"
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                  title="Map for {{ place.title }}"
+                ></iframe>
+              </div>
+
+              @if (place.visitedAt) {
+                <p class="meta">Visited {{ place.visitedAt | date: 'mediumDate' }}</p>
+              }
+            </div>
+          }
+        </article>
+      }
+    </div>
+  </section>
+}
+
+@if (standalones().length) {
+  <section class="section">
+    <div class="section__head">
+      <h2>Standalone destinations</h2>
+      <p>Single places to park on the list until a trip comes together.</p>
+    </div>
+    <div class="grid">
+      @for (place of standalones(); track place.id) {
+        <article
+          class="place place--compact"
+          [class.place--open]="expandedId() === place.id"
+          [class.place--visited]="place.status === 'visited'"
+        >
+          <button
+            type="button"
+            class="place__main"
+            (click)="toggleExpand(place.id)"
+            [attr.aria-expanded]="expandedId() === place.id"
+          >
+            <div class="place__top">
+              <div>
+                <p class="place__region">{{ place.region }}</p>
+                <h3>{{ place.title }}</h3>
+              </div>
+              <span class="badge" [ngClass]="'badge--' + place.status">
+                {{ statusLabel(place.status) }}
+              </span>
+            </div>
+            <p class="place__desc">{{ place.description }}</p>
+          </button>
+
+          <div class="place__actions">
+            <button type="button" class="btn btn--small" (click)="cycleStatus(place)">
+              {{
+                place.status === 'wishlist'
+                  ? 'Start planning'
+                  : place.status === 'planning'
+                    ? 'Mark visited'
+                    : 'Back to wishlist'
+              }}
+            </button>
+            <button type="button" class="btn btn--small btn--quiet" (click)="openEdit(place, $event)">
+              Edit
+            </button>
+            <button type="button" class="btn btn--small btn--quiet" (click)="deletePlace(place, $event)">
+              Remove
+            </button>
+          </div>
+
+          @if (expandedId() === place.id) {
+            <div class="place__detail">
+              <label class="notes">
+                <span>Planning notes</span>
+                <textarea
+                  rows="3"
+                  [name]="'notes-' + place.id"
+                  [ngModel]="place.notes || ''"
+                  (ngModelChange)="saveNotes(place, $event)"
+                  placeholder="When to go, who to bring, nearby stays…"
+                ></textarea>
+              </label>
+
+              <div class="map">
+                <iframe
+                  [src]="mapUrl(place)"
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                  title="Map for {{ place.title }}"
+                ></iframe>
+              </div>
+            </div>
+          }
+        </article>
+      }
+    </div>
+  </section>
+}
+
+@if (!places().length) {
+  <section class="empty">
+    <h2>Nothing matches</h2>
+    <p>Try clearing filters or add a new spot to your hub.</p>
+    <button type="button" class="btn btn--primary" (click)="openCreate()">Add a spot</button>
+  </section>
+}
+
+@if (editorOpen()) {
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="editor-title">
+    <div class="modal__backdrop" (click)="closeEditor()"></div>
+    <form class="modal__panel" (submit)="$event.preventDefault(); saveEditor()">
+      <div class="modal__head">
+        <h2 id="editor-title">{{ editingId() ? 'Edit spot' : 'Add a spot' }}</h2>
+        <button type="button" class="btn btn--small btn--quiet" (click)="closeEditor()">
+          Close
+        </button>
+      </div>
+
+      <label>
+        <span>Title</span>
+        <input
+          required
+          [ngModel]="draft().title"
+          (ngModelChange)="patchDraft('title', $event)"
+          name="title"
+        />
+      </label>
+
+      <div class="modal__row">
+        <label>
+          <span>Type</span>
+          <select
+            [ngModel]="draft().type"
+            (ngModelChange)="patchDraft('type', $event)"
+            name="type"
+          >
+            <option value="standalone">Standalone</option>
+            <option value="road-trip">Road trip</option>
+          </select>
+        </label>
+        <label>
+          <span>Status</span>
+          <select
+            [ngModel]="draft().status"
+            (ngModelChange)="patchDraft('status', $event)"
+            name="status"
+          >
+            <option value="wishlist">Wishlist</option>
+            <option value="planning">Planning</option>
+            <option value="visited">Visited</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="modal__row">
+        <label>
+          <span>Region</span>
+          <input
+            [ngModel]="draft().region"
+            (ngModelChange)="patchDraft('region', $event)"
+            name="region"
+            placeholder="Oregon"
+          />
+        </label>
+        <label>
+          <span>Badge</span>
+          <input
+            [ngModel]="draft().badge"
+            (ngModelChange)="patchDraft('badge', $event)"
+            name="badge"
+            placeholder="3-day coastal loop"
+          />
+        </label>
+      </div>
+
+      <label>
+        <span>Map search</span>
+        <input
+          [ngModel]="draft().mapQuery"
+          (ngModelChange)="patchDraft('mapQuery', $event)"
+          name="mapQuery"
+          placeholder="Crater Lake National Park"
+        />
+      </label>
+
+      <label>
+        <span>Short description</span>
+        <textarea
+          rows="2"
+          [ngModel]="draft().description"
+          (ngModelChange)="patchDraft('description', $event)"
+          name="description"
+        ></textarea>
+      </label>
+
+      @if (draft().type === 'road-trip') {
+        <label>
+          <span>Stops (one per line: Title — details)</span>
+          <textarea
+            rows="5"
+            [ngModel]="draft().stopsText"
+            (ngModelChange)="patchDraft('stopsText', $event)"
+            name="stopsText"
+            placeholder="Day 1: Glacier — Highline Trail"
+          ></textarea>
+        </label>
+      }
+
+      <label>
+        <span>Notes</span>
+        <textarea
+          rows="3"
+          [ngModel]="draft().notes"
+          (ngModelChange)="patchDraft('notes', $event)"
+          name="notes"
+        ></textarea>
+      </label>
+
+      <div class="modal__foot">
+        <button type="button" class="btn btn--quiet" (click)="closeEditor()">Cancel</button>
+        <button type="submit" class="btn btn--primary">Save</button>
+      </div>
+    </form>
+  </div>
+}
+
+@if (toast()) {
+  <div class="toast" role="status">{{ toast() }}</div>
+}
