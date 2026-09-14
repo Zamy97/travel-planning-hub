@@ -1,0 +1,35 @@
+<div class="place-map" [style.--map-h]="height + 'px'">
+  <div class="place-map__toolbar">
+    <p class="place-map__status">
+      @if (loading()) {
+        Charting route…
+      } @else if (error()) {
+        {{ error() }}
+      } @else if (routeMode() === 'driving') {
+        Interactive driving route · {{ waypoints().length }} stops
+      } @else if (routeMode() === 'straight') {
+        Route preview (straight line) · {{ waypoints().length }} stops
+      } @else if (routeMode() === 'single') {
+        Interactive map pin
+      }
+    </p>
+    @if (directionsUrl(); as url) {
+      <a class="place-map__link" [href]="url" target="_blank" rel="noopener noreferrer">
+        Open in Google Maps
+      </a>
+    }
+  </div>
+
+  <div #mapHost class="place-map__canvas" role="img" [attr.aria-label]="'Map for ' + place.title"></div>
+
+  @if (waypoints().length > 1) {
+    <ol class="place-map__legend">
+      @for (point of waypoints(); track point.label; let i = $index) {
+        <li>
+          <span class="place-map__n">{{ i + 1 }}</span>
+          <span>{{ point.label }}</span>
+        </li>
+      }
+    </ol>
+  }
+</div>

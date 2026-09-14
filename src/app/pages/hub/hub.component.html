@@ -16,6 +16,8 @@
   </div>
 </section>
 
+<app-overview-map [places]="allPlaces()" />
+
 <section class="toolbar" id="collection">
   <div class="stats">
     <div class="stat">
@@ -172,12 +174,7 @@
               </label>
 
               <div class="map">
-                <iframe
-                  [src]="mapUrl(place)"
-                  loading="lazy"
-                  referrerpolicy="no-referrer-when-downgrade"
-                  title="Map for {{ place.title }}"
-                ></iframe>
+                <app-place-map [place]="place" [height]="300" />
               </div>
 
               @if (place.visitedAt) {
@@ -254,12 +251,7 @@
               </label>
 
               <div class="map">
-                <iframe
-                  [src]="mapUrl(place)"
-                  loading="lazy"
-                  referrerpolicy="no-referrer-when-downgrade"
-                  title="Map for {{ place.title }}"
-                ></iframe>
+                <app-place-map [place]="place" [height]="300" />
               </div>
             </div>
           }

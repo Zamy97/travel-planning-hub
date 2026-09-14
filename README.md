@@ -38,4 +38,5 @@ npx vercel
 
 - No backend: places persist only in the current browser via localStorage.
 - Use **Export** / **Import** to move data between devices or browsers.
-- Embedded maps use Google Maps embed URLs from each place’s map query.
+- Maps use **Leaflet + OpenStreetMap** (interactive). Road trips draw a driving route via OSRM when available, with numbered stops and an “Open in Google Maps” link.
+- New custom places are geocoded with OpenStreetMap Nominatim from the map search / title.

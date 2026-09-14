@@ -1,7 +1,8 @@
 import { DatePipe, NgClass } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { OverviewMapComponent } from '../../components/overview-map/overview-map.component';
+import { PlaceMapComponent } from '../../components/place-map/place-map.component';
 import { Place, PlaceStatus, PlaceType } from '../../models/travel.model';
 import { PlaceDraft, TravelService } from '../../services/travel.service';
 
@@ -11,13 +12,18 @@ type FilterType = PlaceType | 'all';
 @Component({
   selector: 'app-hub',
   standalone: true,
-  imports: [FormsModule, DatePipe, NgClass],
+  imports: [
+    FormsModule,
+    DatePipe,
+    NgClass,
+    PlaceMapComponent,
+    OverviewMapComponent,
+  ],
   templateUrl: './hub.component.html',
   styleUrl: './hub.component.scss',
 })
 export class HubComponent {
   private readonly travel = inject(TravelService);
-  private readonly sanitizer = inject(DomSanitizer);
 
   readonly query = signal('');
   readonly statusFilter = signal<FilterStatus>('all');
@@ -30,6 +36,7 @@ export class HubComponent {
   readonly draft = signal<PlaceDraft>(this.emptyDraft());
 
   readonly stats = this.travel.stats;
+  readonly allPlaces = this.travel.places;
 
   readonly places = computed(() =>
     this.travel.filtered(
@@ -72,12 +79,6 @@ export class HubComponent {
         : place.status === 'planning'
           ? `Marked ${place.title} as visited`
           : `Now planning ${place.title}`
-    );
-  }
-
-  mapUrl(place: Place): SafeResourceUrl {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(
-      this.travel.mapEmbedUrl(place.mapQuery)
     );
   }
 

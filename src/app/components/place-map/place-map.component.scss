@@ -1,0 +1,106 @@
+.place-map {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.place-map__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  align-items: center;
+}
+
+.place-map__status {
+  margin: 0;
+  font-size: 0.86rem;
+  color: var(--muted);
+}
+
+.place-map__link {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--teal);
+  text-decoration: none;
+}
+
+.place-map__link:hover {
+  text-decoration: underline;
+}
+
+.place-map__canvas {
+  height: var(--map-h, 280px);
+  border-radius: 0.85rem;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: #dce8e4;
+}
+
+.place-map__legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.85rem;
+}
+
+.place-map__legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.84rem;
+  color: var(--muted);
+}
+
+.place-map__n {
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 999px;
+  display: inline-grid;
+  place-items: center;
+  background: var(--teal);
+  color: #f4f7f6;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+:host ::ng-deep .waymark-pin {
+  background: transparent;
+  border: 0;
+}
+
+:host ::ng-deep .waymark-pin__dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: #0f766e;
+  color: #f4f7f6;
+  font-weight: 700;
+  font-size: 0.78rem;
+  border: 2px solid #f7f4ee;
+  box-shadow: 0 2px 8px rgba(15, 45, 42, 0.28);
+}
+
+:host ::ng-deep .waymark-pin__dot--single {
+  background: #c2783a;
+}
+
+:host ::ng-deep .leaflet-popup-content {
+  margin: 0.65rem 0.8rem;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  line-height: 1.35;
+  color: #1c2d2a;
+}
+
+:host ::ng-deep .leaflet-popup-content strong {
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+:host ::ng-deep .leaflet-popup-content span {
+  color: #5c6f6a;
+}

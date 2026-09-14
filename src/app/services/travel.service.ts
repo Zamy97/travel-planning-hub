@@ -1,4 +1,4 @@
-import { Injectable, computed, signal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 import { SEED_PLACES } from '../data/seed-places';
 import {
   Place,
@@ -6,9 +6,10 @@ import {
   PlaceType,
   TravelStore,
 } from '../models/travel.model';
+import { GeocodeService } from './geocode.service';
 
 const STORAGE_KEY = 'travel-planning-hub.v1';
-const STORE_VERSION = 1;
+const STORE_VERSION = 2;
 
 export interface PlaceDraft {
   title: string;
@@ -24,6 +25,7 @@ export interface PlaceDraft {
 
 @Injectable({ providedIn: 'root' })
 export class TravelService {
+  private readonly geocode = inject(GeocodeService);
   private readonly placesSignal = signal<Place[]>(this.load());
 
   readonly places = this.placesSignal.asReadonly();
@@ -111,12 +113,14 @@ export class TravelService {
       isSeed: false,
     };
 
+    let saved = place;
     this.placesSignal.update((places) => {
-      const unique = this.ensureUniqueId(place, places);
-      return [unique, ...places];
+      saved = this.ensureUniqueId(place, places);
+      return [saved, ...places];
     });
     this.persist();
-    return place;
+    void this.enrichCoordinates(saved.id);
+    return saved;
   }
 
   updatePlaceFields(id: string, draft: PlaceDraft): void {
@@ -132,7 +136,10 @@ export class TravelService {
       visitedAt:
         draft.status === 'visited' ? new Date().toISOString() : undefined,
       stops: this.parseStops(draft.stopsText),
+      lat: undefined,
+      lng: undefined,
     });
+    void this.enrichCoordinates(id);
   }
 
   deletePlace(id: string): void {
@@ -154,7 +161,9 @@ export class TravelService {
       if (!parsed?.places || !Array.isArray(parsed.places)) {
         return { ok: false, error: 'Invalid file: missing places array.' };
       }
-      const places = parsed.places.map((place) => this.normalizePlace(place));
+      const places = parsed.places.map((place) =>
+        this.mergeSeedCoords(this.normalizePlace(place))
+      );
       this.placesSignal.set(places);
       this.persist();
       return { ok: true };
@@ -168,9 +177,32 @@ export class TravelService {
     this.persist();
   }
 
-  mapEmbedUrl(query: string): string {
-    const q = encodeURIComponent(query);
-    return `https://maps.google.com/maps?q=${q}&t=&z=8&ie=UTF8&iwloc=&output=embed`;
+  private async enrichCoordinates(id: string): Promise<void> {
+    const place = this.placesSignal().find((p) => p.id === id);
+    if (!place) return;
+
+    const points = await this.geocode.resolvePlace(place);
+    if (!points.length) return;
+
+    if (place.stops?.length) {
+      const stops = place.stops.map((stop, index) => {
+        const point = points[index];
+        return point
+          ? { ...stop, lat: point.lat, lng: point.lng }
+          : stop;
+      });
+      this.updatePlace(id, {
+        stops,
+        lat: points[0].lat,
+        lng: points[0].lng,
+      });
+      return;
+    }
+
+    this.updatePlace(id, {
+      lat: points[0].lat,
+      lng: points[0].lng,
+    });
   }
 
   private updatePlace(id: string, patch: Partial<Place>): void {
@@ -194,10 +226,18 @@ export class TravelService {
       if (!parsed?.places?.length) {
         return structuredClone(SEED_PLACES);
       }
-      return parsed.places.map((place) => this.normalizePlace(place));
+      const places = parsed.places.map((place) =>
+        this.mergeSeedCoords(this.normalizePlace(place))
+      );
+      return places;
     } catch {
       return structuredClone(SEED_PLACES);
     }
+  }
+
+  constructor() {
+    // Persist seed coordinate upgrades for existing local saves.
+    this.persist();
   }
 
   private persist(): void {
@@ -222,6 +262,37 @@ export class TravelService {
     };
   }
 
+  private mergeSeedCoords(place: Place): Place {
+    const seed = SEED_PLACES.find((s) => s.id === place.id);
+    if (!seed) return place;
+
+    const needsPlaceCoords =
+      typeof place.lat !== 'number' || typeof place.lng !== 'number';
+    const stops =
+      place.stops?.map((stop, index) => {
+        const seedStop = seed.stops?.[index];
+        if (
+          seedStop &&
+          (typeof stop.lat !== 'number' || typeof stop.lng !== 'number')
+        ) {
+          return {
+            ...stop,
+            lat: seedStop.lat,
+            lng: seedStop.lng,
+            mapQuery: stop.mapQuery || seedStop.mapQuery,
+          };
+        }
+        return stop;
+      }) ?? seed.stops;
+
+    return {
+      ...place,
+      lat: needsPlaceCoords ? seed.lat : place.lat,
+      lng: needsPlaceCoords ? seed.lng : place.lng,
+      stops: place.stops?.length ? stops : place.stops ?? seed.stops,
+    };
+  }
+
   private parseStops(stopsText?: string) {
     if (!stopsText?.trim()) return undefined;
     return stopsText
@@ -233,6 +304,7 @@ export class TravelService {
         return {
           title: title.trim(),
           detail: rest.join('—').trim() || title.trim(),
+          mapQuery: title.trim(),
         };
       });
   }
