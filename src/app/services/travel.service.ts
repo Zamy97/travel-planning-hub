@@ -9,7 +9,7 @@ import {
 import { GeocodeService } from './geocode.service';
 
 const STORAGE_KEY = 'travel-planning-hub.v1';
-const STORE_VERSION = 2;
+const STORE_VERSION = 3;
 
 export interface PlaceDraft {
   title: string;
@@ -226,17 +226,17 @@ export class TravelService {
       if (!parsed?.places?.length) {
         return structuredClone(SEED_PLACES);
       }
-      const places = parsed.places.map((place) =>
+      const existing = parsed.places.map((place) =>
         this.mergeSeedCoords(this.normalizePlace(place))
       );
-      return places;
+      return this.upsertMissingSeeds(existing);
     } catch {
       return structuredClone(SEED_PLACES);
     }
   }
 
   constructor() {
-    // Persist seed coordinate upgrades for existing local saves.
+    // Persist seed upgrades (coords + newly added seed places).
     this.persist();
   }
 
@@ -260,6 +260,15 @@ export class TravelService {
       updatedAt: place.updatedAt || new Date().toISOString(),
       isSeed: Boolean(place.isSeed),
     };
+  }
+
+  /** Add any seed places that are not already in the user's local list. */
+  private upsertMissingSeeds(existing: Place[]): Place[] {
+    const ids = new Set(existing.map((p) => p.id));
+    const missing = SEED_PLACES.filter((seed) => !ids.has(seed.id)).map((seed) =>
+      structuredClone(seed)
+    );
+    return missing.length ? [...missing, ...existing] : existing;
   }
 
   private mergeSeedCoords(place: Place): Place {
