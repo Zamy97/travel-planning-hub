@@ -9,7 +9,7 @@ import {
 import { GeocodeService } from './geocode.service';
 
 const STORAGE_KEY = 'travel-planning-hub.v1';
-const STORE_VERSION = 12;
+const STORE_VERSION = 13;
 
 export interface PlaceDraft {
   title: string;

@@ -151,6 +151,15 @@
 
           @if (expandedId() === place.id) {
             <div class="place__detail">
+              @if (place.id === 'finger-lakes-upstate-ny') {
+                <p class="share-guide">
+                  <a href="/finger-lakes-trip.html" target="_blank" rel="noopener noreferrer">
+                    Open shareable trip guide
+                  </a>
+                  <span> — send this page to travel partners, or Print → Save as PDF</span>
+                </p>
+              }
+
               @if (place.dayPlans?.length) {
                 <div class="day-plans">
                   <h4 class="day-plans__title">Hour-by-hour plan</h4>

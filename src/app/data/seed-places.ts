@@ -968,6 +968,14 @@ export const SEED_PLACES: Place[] = [
         mapQuery: 'Ithaca Falls Natural Area',
       },
       {
+        title: 'Optional — Robert H. Treman State Park',
+        detail:
+          'Near Ithaca (by Buttermilk). Lucifer Falls / Enfield Glen — pick a ~1–2 mile gorge or rim section only; don’t do the full long loop unless you feel great. Go Thu afternoon if Cornell wraps early, or Fri if Taughannock leaves you hungry for one more gorge. Skip with zero guilt.',
+        lat: 42.4001,
+        lng: -76.5731,
+        mapQuery: 'Robert H Treman State Park',
+      },
+      {
         title: 'Friday — Taughannock Falls State Park',
         detail:
           'NY’s tallest single-drop waterfall (215 ft). Gorge Trail to the base ~1.5–2 miles round trip (~45 min). Quieter than Watkins Glen. See overlook first, then hike down. Optional Cayuga lakeside pause nearby.',
@@ -978,7 +986,7 @@ export const SEED_PLACES: Place[] = [
       {
         title: 'Friday optional — Carpenter Falls',
         detail:
-          'Only if energy/time after Taughannock. Overlook is tiny; bottom needs stairs. Skip if you’re hike-tired — not a must.',
+          'Only if energy/time after Taughannock. Overlook is tiny; bottom needs stairs. Prefer Treman over this if you only do one optional. Skip if you’re hike-tired — not a must.',
         lat: 42.7306,
         lng: -76.3756,
         mapQuery: 'Carpenter Falls New York',
@@ -993,7 +1001,7 @@ export const SEED_PLACES: Place[] = [
       },
     ],
     notes:
-      'BASE: Marathon, NY (Wed–Sat). Goal: short drives, ~1–2 mile hikes, beat crowds, Cornell visit, halal-friendly eats.\n\nCROWD STRATEGY: Do Watkins Glen on Wednesday at opening/sunrise — it gets packed. Prefer weekdays for popular gorges. Avoid Watkins Glen Saturday if you can.\n\nDRIVING (approx one-way from Marathon): Fillmore Glen ~20 min · Ithaca cluster ~45–55 min · Taughannock ~55–70 min · Watkins Glen ~1 hr–1 hr 15. Skip Letchworth this trip (~2 hrs each way) — save “Grand Canyon of the East” for a dedicated western-NY weekend.\n\nHALAL-FRIENDLY (Ithaca — confirm hours): Adam Grill (114 W Green St, Mediterranean), Casablanca Pizzeria & Halal Grill / Ithaca Halal Cuisine area on E State St, plus Cornell Dining halal options if campus access allows (Morrison Dining has a dedicated halal station). Vegetarian/seafood spots are backups. Pack snacks for early park mornings.\n\nGEAR: Trail shoes with grip (muddy gorge steps), water, layers for fall, park day-use fee ($10/car typical for NY parks — ticket reusable same day).\n\nCross-link: Ausable Chasm / Whiteface are Adirondacks — save for a different Upstate trip.',
+      'BASE: Marathon, NY (Wed–Sat). Goal: short drives, ~1–2 mile hikes, beat crowds, Cornell visit, halal-friendly eats.\n\nCROWD STRATEGY: Do Watkins Glen on Wednesday at opening/sunrise — it gets packed. Prefer weekdays for popular gorges. Avoid Watkins Glen Saturday if you can.\n\nOPTIONAL: Robert H. Treman State Park (Lucifer Falls / Enfield Glen) near Ithaca — add Thu or Fri only if you feel like it; keep the hike to ~1–2 miles. Prefer Treman over Carpenter Falls if choosing one bonus. Skipping is totally fine.\n\nDRIVING (approx one-way from Marathon): Fillmore Glen ~20 min · Ithaca cluster ~45–55 min · Taughannock ~55–70 min · Watkins Glen ~1 hr–1 hr 15. Skip Letchworth this trip (~2 hrs each way) — save “Grand Canyon of the East” for a dedicated western-NY weekend.\n\nHALAL-FRIENDLY (Ithaca — confirm hours): Adam Grill (114 W Green St, Mediterranean), Casablanca Pizzeria & Halal Grill / Ithaca Halal Cuisine area on E State St, plus Cornell Dining halal options if campus access allows (Morrison Dining has a dedicated halal station). Vegetarian/seafood spots are backups. Pack snacks for early park mornings.\n\nGEAR: Trail shoes with grip (muddy gorge steps), water, layers for fall, park day-use fee ($10/car typical for NY parks — ticket reusable same day).\n\nCross-link: Ausable Chasm / Whiteface are Adirondacks — save for a different Upstate trip.',
     dayPlans: [
       {
         label: 'Wednesday',
@@ -1020,8 +1028,9 @@ export const SEED_PLACES: Place[] = [
           { time: '12:15–1:30 PM', activity: 'Halal-friendly lunch (Adam Grill, Casablanca / Ithaca Halal Cuisine — confirm hours).' },
           { time: '1:45–3:30 PM', activity: 'Cornell University campus tour / self-guided overlooks (book official tour if timed).' },
           { time: '3:45–4:15 PM', activity: 'Ithaca Falls Natural Area — overlook or short walk to the base.' },
-          { time: '4:30 PM', activity: 'Drive back to Marathon (~50 min).' },
-          { time: '5:30 PM', activity: 'Easy dinner near Marathon or leftovers.' },
+          { time: '4:15–5:30 PM', activity: 'OPTIONAL: Robert H. Treman (~10 min from Buttermilk) — only if legs/time feel good; ~1–2 mi section, then head to Marathon. Otherwise skip.' },
+          { time: '4:30 PM / ~6:00 PM', activity: 'Drive back to Marathon (~50 min) — earlier if you skip Treman.' },
+          { time: 'Evening', activity: 'Easy dinner near Marathon or leftovers.' },
         ],
       },
       {
@@ -1033,7 +1042,7 @@ export const SEED_PLACES: Place[] = [
           { time: '9:30–11:15 AM', activity: 'Gorge Trail to the base and back (~1.5–2 mi).' },
           { time: '11:30 AM', activity: 'Optional Cayuga lakeside pause.' },
           { time: '12:00 PM', activity: 'Picnic or simple lunch on the return corridor.' },
-          { time: '1:00–2:00 PM', activity: 'OPTIONAL: Carpenter Falls only if legs feel good; otherwise skip.' },
+          { time: '1:00–2:30 PM', activity: 'OPTIONAL bonus gorge: Robert H. Treman on the way toward Ithaca/Marathon if you skipped it Thursday — still keep to ~1–2 mi. Or Carpenter Falls. Or neither.' },
           { time: '2:30–3:30 PM', activity: 'Return to Marathon; rest / early dinner.' },
         ],
       },
