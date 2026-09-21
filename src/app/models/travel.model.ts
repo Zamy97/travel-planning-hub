@@ -14,6 +14,17 @@ export interface TripStop {
   mapQuery?: string;
 }
 
+export interface DaySlot {
+  time: string;
+  activity: string;
+}
+
+export interface DayPlan {
+  label: string;
+  focus?: string;
+  slots: DaySlot[];
+}
+
 export interface Place {
   id: string;
   title: string;
@@ -22,6 +33,7 @@ export interface Place {
   badge: string;
   description?: string;
   stops?: TripStop[];
+  dayPlans?: DayPlan[];
   notes?: string;
   mapQuery: string;
   lat?: number;

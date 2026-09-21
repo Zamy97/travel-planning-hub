@@ -415,6 +415,62 @@
   animation: unfold 0.28s ease-out;
 }
 
+.day-plans {
+  display: grid;
+  gap: 1rem;
+}
+
+.day-plans__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  letter-spacing: -0.02em;
+}
+
+.day-plan {
+  border: 1px solid var(--line);
+  border-radius: 0.85rem;
+  padding: 0.85rem 1rem;
+  background: linear-gradient(180deg, #f7faf9, #f3f7f5);
+}
+
+.day-plan__head h5 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.day-plan__head p {
+  margin: 0.2rem 0 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.day-plan__slots {
+  list-style: none;
+  margin: 0.75rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.day-plan__slots li {
+  display: grid;
+  grid-template-columns: minmax(6.5rem, auto) 1fr;
+  gap: 0.65rem;
+  align-items: start;
+  font-size: 0.92rem;
+}
+
+.day-plan__slots time {
+  font-weight: 700;
+  color: var(--teal);
+  white-space: nowrap;
+}
+
+.day-plan__slots span {
+  color: var(--ink);
+}
+
 .stops {
   margin: 0;
   padding: 0;

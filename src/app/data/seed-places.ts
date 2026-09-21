@@ -11,9 +11,17 @@ export const SEED_PLACES: Place[] = [
     badge: '10-day Northern Rockies',
     stops: [
       {
+        title: 'Going-to-the-Sun Road',
+        detail:
+          'Iconic alpine drive across Glacier National Park — Hidden Lake Overlook and big mountain views along the way.',
+        lat: 48.6967,
+        lng: -113.7181,
+        mapQuery: 'Going-to-the-Sun Road Glacier National Park',
+      },
+      {
         title: 'Days 1–4: Glacier National Park',
         detail:
-          'Going-to-the-Sun Road, Hidden Lake Overlook, Highline Trail, Grinnell Glacier, Avalanche Lake.',
+          'Highline Trail, Grinnell Glacier, Avalanche Lake, and more time around the Sun Road corridor.',
         lat: 48.7596,
         lng: -113.787,
         mapQuery: 'Glacier National Park',
@@ -36,7 +44,7 @@ export const SEED_PLACES: Place[] = [
       },
     ],
     notes:
-      'Stay 2 nights West Glacier / 2 nights East Glacier. Visit Yellowstone early or late. Base in Jackson for Tetons. Carry bear spray.',
+      'Stay 2 nights West Glacier / 2 nights East Glacier. Prioritize Going-to-the-Sun Road (check seasonal opening). Visit Yellowstone early or late. Base in Jackson for Tetons. Carry bear spray.',
     mapQuery: 'Yellowstone National Park',
     lat: 44.428,
     lng: -110.5885,
@@ -876,9 +884,17 @@ export const SEED_PLACES: Place[] = [
         lng: -73.9799,
         mapQuery: 'Lake Placid New York',
       },
+      {
+        title: 'Whiteface Veterans’ Memorial Highway',
+        detail:
+          'Paved climb of 2,300+ feet in ~5 miles to a 4,867-ft High Peak — prime Adirondack fall foliage panoramas into Vermont and Canada. From the top lot: Ridge Trail scramble or the mountain elevator to the summit.',
+        lat: 44.3659,
+        lng: -73.9026,
+        mapQuery: 'Whiteface Veterans Memorial Highway',
+      },
     ],
     notes:
-      'One of the coolest fall stops in Upstate NY — imagine peak foliage over the sandstone gorge. Easy add to an Adirondacks trip. Not in the Finger Lakes (those are farther west/central), but it works as a future Upstate extension: Finger Lakes → Adirondacks / Ausable Chasm / Lake Placid if you want a longer New York loop.',
+      'Peak fall Adirondacks loop: Ausable Chasm gorge + Lake Placid / High Peaks + Whiteface Veterans’ Memorial Highway for sweeping autumn views. Not in the Finger Lakes (those are farther west/central), but it works as a future Upstate extension: Finger Lakes → Adirondacks / Ausable Chasm / Whiteface / Lake Placid.',
     mapQuery: 'Ausable Chasm New York',
     lat: 44.5256,
     lng: -73.4626,
@@ -889,40 +905,153 @@ export const SEED_PLACES: Place[] = [
   },
   {
     id: 'finger-lakes-upstate-ny',
-    title: 'Finger Lakes Upstate NY',
+    title: 'Finger Lakes from Marathon',
     type: 'road-trip',
     region: 'New York',
-    badge: 'Future Upstate base',
+    badge: 'Wed–Sat · base: Marathon',
+    status: 'planning',
     stops: [
       {
-        title: 'Finger Lakes wine & lake towns',
-        detail: 'Base around Seneca / Cayuga / Keuka for lakes, wineries, and fall color drives.',
-        lat: 42.6858,
-        lng: -76.8619,
-        mapQuery: 'Seneca Lake New York',
+        title: 'Home base — Marathon, NY',
+        detail:
+          'Stay all four nights here to keep driving light. Most day trips are ~45–75 minutes each way toward Ithaca / Cayuga & Seneca.',
+        lat: 42.4417,
+        lng: -76.0369,
+        mapQuery: 'Marathon New York',
       },
       {
-        title: 'Watkins Glen State Park',
-        detail: 'Classic gorge hike with waterfalls — peak fall favorite.',
+        title: 'Wednesday — Watkins Glen State Park (EARLY)',
+        detail:
+          'Gorge Trail ~2.2 miles out-and-back, ~19 waterfalls, steps + mud — proper shoes. Go at sunrise / park open to beat crowds (weekdays help a lot). Tip: north entrance often quieter; south has more services. NY state park day pass covers multiple parks same day.',
         lat: 42.3762,
         lng: -76.8716,
-        mapQuery: 'Watkins Glen State Park',
+        mapQuery: 'Watkins Glen State Park North Entrance',
       },
       {
-        title: 'Extend north to Ausable Chasm',
+        title: 'Wednesday — Chequaga (SheQuaga) Falls, Montour Falls',
         detail:
-          'Optional longer Upstate loop: continue toward the Adirondacks for Ausable Chasm + Lake Placid.',
-        lat: 44.5256,
-        lng: -73.4626,
-        mapQuery: 'Ausable Chasm New York',
+          '~8 minutes from Watkins Glen. Quick 2–5 minute viewpoint stop. Do NOT GPS “the falls” (bridge, no parking) — use Genesee Street for roadside pull-offs.',
+        lat: 42.3487,
+        lng: -76.8455,
+        mapQuery: 'Chequaga Falls Genesee Street Montour Falls',
+      },
+      {
+        title: 'Thursday — Buttermilk Falls State Park',
+        detail:
+          'Gorge Trail up along the falls (~0.5–1 mile of stairs/path), then return via Rim Trail for a ~1.5–2 mile loop feel. Enchanted-forest vibe; water level changes the show. Keep your park ticket for other NY parks same day.',
+        lat: 42.4162,
+        lng: -76.5227,
+        mapQuery: 'Buttermilk Falls State Park Ithaca',
+      },
+      {
+        title: 'Thursday — Cascadilla Gorge Trail → Cornell',
+        detail:
+          'Beautiful ~1–1.5 mile gorge walk linking downtown Ithaca up toward Cornell campus — waterfalls + student shortcut. Perfect bridge into the campus tour.',
+        lat: 42.4425,
+        lng: -76.485,
+        mapQuery: 'Cascadilla Gorge Trail Ithaca',
+      },
+      {
+        title: 'Thursday — Cornell University campus tour',
+        detail:
+          'Self-guided or official visitor tour — scenic overlooks of Cayuga Lake / campus gorges. Check visit.cornell.edu for tour times; book ahead if needed. Pair with Cascadilla arrival.',
+        lat: 42.4534,
+        lng: -76.4735,
+        mapQuery: 'Cornell University Ithaca',
+      },
+      {
+        title: 'Thursday — Ithaca Falls Natural Area',
+        detail:
+          'Downtown short stop: observation deck or ~5-minute walk to the base. Easy add after Cornell / Cascadilla.',
+        lat: 42.4527,
+        lng: -76.4919,
+        mapQuery: 'Ithaca Falls Natural Area',
+      },
+      {
+        title: 'Friday — Taughannock Falls State Park',
+        detail:
+          'NY’s tallest single-drop waterfall (215 ft). Gorge Trail to the base ~1.5–2 miles round trip (~45 min). Quieter than Watkins Glen. See overlook first, then hike down. Optional Cayuga lakeside pause nearby.',
+        lat: 42.5362,
+        lng: -76.6113,
+        mapQuery: 'Taughannock Falls State Park',
+      },
+      {
+        title: 'Friday optional — Carpenter Falls',
+        detail:
+          'Only if energy/time after Taughannock. Overlook is tiny; bottom needs stairs. Skip if you’re hike-tired — not a must.',
+        lat: 42.7306,
+        lng: -76.3756,
+        mapQuery: 'Carpenter Falls New York',
+      },
+      {
+        title: 'Saturday — Fillmore Glen State Park (near Marathon)',
+        detail:
+          'Closest gem to home base (~20 min to Moravia). Pick a ~1–2 mile gorge / rim section — skip any long full-park loops. Easy “not much driving” last day before packing up.',
+        lat: 42.7006,
+        lng: -76.4153,
+        mapQuery: 'Fillmore Glen State Park Moravia',
       },
     ],
     notes:
-      'Starter Finger Lakes plan for future Upstate NY travel. Ausable Chasm is Adirondacks (not in the Finger Lakes themselves) — link it as an extension when you want gorge + High Peaks after the lakes.',
-    mapQuery: 'Finger Lakes New York',
-    lat: 42.6858,
-    lng: -76.8619,
-    status: 'wishlist',
+      'BASE: Marathon, NY (Wed–Sat). Goal: short drives, ~1–2 mile hikes, beat crowds, Cornell visit, halal-friendly eats.\n\nCROWD STRATEGY: Do Watkins Glen on Wednesday at opening/sunrise — it gets packed. Prefer weekdays for popular gorges. Avoid Watkins Glen Saturday if you can.\n\nDRIVING (approx one-way from Marathon): Fillmore Glen ~20 min · Ithaca cluster ~45–55 min · Taughannock ~55–70 min · Watkins Glen ~1 hr–1 hr 15. Skip Letchworth this trip (~2 hrs each way) — save “Grand Canyon of the East” for a dedicated western-NY weekend.\n\nHALAL-FRIENDLY (Ithaca — confirm hours): Adam Grill (114 W Green St, Mediterranean), Casablanca Pizzeria & Halal Grill / Ithaca Halal Cuisine area on E State St, plus Cornell Dining halal options if campus access allows (Morrison Dining has a dedicated halal station). Vegetarian/seafood spots are backups. Pack snacks for early park mornings.\n\nGEAR: Trail shoes with grip (muddy gorge steps), water, layers for fall, park day-use fee ($10/car typical for NY parks — ticket reusable same day).\n\nCross-link: Ausable Chasm / Whiteface are Adirondacks — save for a different Upstate trip.',
+    dayPlans: [
+      {
+        label: 'Wednesday',
+        focus: 'Beat Watkins Glen crowds · Montour Falls add-on',
+        slots: [
+          { time: '6:15 AM', activity: 'Leave Marathon with packed breakfast/snacks + trail shoes.' },
+          { time: '7:30 AM', activity: 'Arrive Watkins Glen (aim for opening). Prefer North Entrance if quiet; South has more services.' },
+          { time: '7:45–10:00 AM', activity: 'Hike Gorge Trail ~2.2 mi out-and-back (~19 falls). Muddy steps — take it steady.' },
+          { time: '10:15 AM', activity: 'Drive ~8 min to Montour Falls.' },
+          { time: '10:25–10:40 AM', activity: 'Chequaga Falls via Genesee Street pull-offs (not the bridge GPS pin).' },
+          { time: '10:45 AM', activity: 'Optional snack stop; drive back toward Marathon.' },
+          { time: '12:15 PM', activity: 'Back in Marathon — rest, lunch at lodging, light afternoon free.' },
+          { time: 'Evening', activity: 'Early night — Thursday is Ithaca + Cornell.' },
+        ],
+      },
+      {
+        label: 'Thursday',
+        focus: 'Ithaca gorges · Cornell tour · halal-friendly lunch',
+        slots: [
+          { time: '7:30 AM', activity: 'Leave Marathon for Ithaca (~45–55 min).' },
+          { time: '8:30 AM', activity: 'Buttermilk Falls — Gorge Trail up, Rim Trail down (~1.5–2 mi). Keep NY park day ticket.' },
+          { time: '10:30 AM', activity: 'Hop to Cascadilla Gorge trailhead.' },
+          { time: '10:45 AM–12:00 PM', activity: 'Cascadilla Gorge Trail toward campus (~1–1.5 mi).' },
+          { time: '12:15–1:30 PM', activity: 'Halal-friendly lunch (Adam Grill, Casablanca / Ithaca Halal Cuisine — confirm hours).' },
+          { time: '1:45–3:30 PM', activity: 'Cornell University campus tour / self-guided overlooks (book official tour if timed).' },
+          { time: '3:45–4:15 PM', activity: 'Ithaca Falls Natural Area — overlook or short walk to the base.' },
+          { time: '4:30 PM', activity: 'Drive back to Marathon (~50 min).' },
+          { time: '5:30 PM', activity: 'Easy dinner near Marathon or leftovers.' },
+        ],
+      },
+      {
+        label: 'Friday',
+        focus: 'Taughannock (quieter big waterfall)',
+        slots: [
+          { time: '8:00 AM', activity: 'Leave Marathon for Taughannock Falls (~55–70 min).' },
+          { time: '9:15 AM', activity: 'Overlook first for the classic 215-ft view.' },
+          { time: '9:30–11:15 AM', activity: 'Gorge Trail to the base and back (~1.5–2 mi).' },
+          { time: '11:30 AM', activity: 'Optional Cayuga lakeside pause.' },
+          { time: '12:00 PM', activity: 'Picnic or simple lunch on the return corridor.' },
+          { time: '1:00–2:00 PM', activity: 'OPTIONAL: Carpenter Falls only if legs feel good; otherwise skip.' },
+          { time: '2:30–3:30 PM', activity: 'Return to Marathon; rest / early dinner.' },
+        ],
+      },
+      {
+        label: 'Saturday',
+        focus: 'Closest park · light driving · pack up',
+        slots: [
+          { time: '8:30 AM', activity: 'Leave Marathon for Fillmore Glen, Moravia (~20 min).' },
+          { time: '9:00–11:00 AM', activity: 'Pick a ~1–2 mile gorge/rim section — skip long full-park loops.' },
+          { time: '11:15 AM', activity: 'Snack + photos; return to Marathon.' },
+          { time: '12:00 PM', activity: 'Checkout / pack / flexible lunch.' },
+          { time: 'Afternoon', activity: 'Head home — skip Watkins Glen (weekend crowds).' },
+        ],
+      },
+    ],
+    mapQuery: 'Ithaca New York',
+    lat: 42.444,
+    lng: -76.5019,
     createdAt: now(),
     updatedAt: now(),
     isSeed: true,
@@ -1416,6 +1545,42 @@ export const SEED_PLACES: Place[] = [
     mapQuery: 'Cucumber Falls Ohiopyle Pennsylvania',
     lat: 39.8667,
     lng: -79.4939,
+    status: 'wishlist',
+    createdAt: now(),
+    updatedAt: now(),
+    isSeed: true,
+  },
+  {
+    id: 'going-to-the-sun-road',
+    title: 'Going-to-the-Sun Road',
+    type: 'standalone',
+    region: 'Montana',
+    badge: 'Glacier National Park',
+    description:
+      'Legendary alpine road crossing Glacier National Park — cliffs, lakes, and Logan Pass views.',
+    notes:
+      'Seasonal opening (often late spring/summer into fall). Check NPS conditions before you go. Also listed as a stop on the Glacier / Yellowstone / Tetons road trip. Hidden Lake Overlook is a classic walk from Logan Pass.',
+    mapQuery: 'Going-to-the-Sun Road Glacier National Park Montana',
+    lat: 48.6967,
+    lng: -113.7181,
+    status: 'wishlist',
+    createdAt: now(),
+    updatedAt: now(),
+    isSeed: true,
+  },
+  {
+    id: 'whiteface-memorial-highway',
+    title: 'Whiteface Veterans’ Memorial Highway',
+    type: 'standalone',
+    region: 'New York',
+    badge: 'Adirondacks · fall foliage',
+    description:
+      'Paved High Peak drive rising over 2,300 feet in about five miles to a 4,867-foot summit — autumn color unfolds below with views across the Adirondacks toward Vermont and Canada.',
+    notes:
+      'At the top parking area: take the short Ridge Trail for open-air foliage views, or ride the historic elevator through the mountain to the summit. Excellent Lake Placid / Ausable Chasm pairing. Check seasonal highway hours and weather before you go.',
+    mapQuery: 'Whiteface Veterans Memorial Highway New York',
+    lat: 44.3659,
+    lng: -73.9026,
     status: 'wishlist',
     createdAt: now(),
     updatedAt: now(),

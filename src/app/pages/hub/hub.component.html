@@ -151,6 +151,30 @@
 
           @if (expandedId() === place.id) {
             <div class="place__detail">
+              @if (place.dayPlans?.length) {
+                <div class="day-plans">
+                  <h4 class="day-plans__title">Hour-by-hour plan</h4>
+                  @for (day of place.dayPlans; track day.label) {
+                    <section class="day-plan">
+                      <div class="day-plan__head">
+                        <h5>{{ day.label }}</h5>
+                        @if (day.focus) {
+                          <p>{{ day.focus }}</p>
+                        }
+                      </div>
+                      <ol class="day-plan__slots">
+                        @for (slot of day.slots; track slot.time + slot.activity) {
+                          <li>
+                            <time>{{ slot.time }}</time>
+                            <span>{{ slot.activity }}</span>
+                          </li>
+                        }
+                      </ol>
+                    </section>
+                  }
+                </div>
+              }
+
               @if (place.stops?.length) {
                 <ol class="stops">
                   @for (stop of place.stops; track stop.title) {

@@ -9,7 +9,7 @@ import {
 import { GeocodeService } from './geocode.service';
 
 const STORAGE_KEY = 'travel-planning-hub.v1';
-const STORE_VERSION = 8;
+const STORE_VERSION = 12;
 
 export interface PlaceDraft {
   title: string;
@@ -277,6 +277,31 @@ export class TravelService {
 
     const needsPlaceCoords =
       typeof place.lat !== 'number' || typeof place.lng !== 'number';
+
+    // Seed trips that gained stops or hour-by-hour plans should refresh.
+    const seedStopsChanged =
+      Boolean(seed.stops?.length) &&
+      seed.stops!.length !== (place.stops?.length ?? 0);
+    const seedPlansMissing =
+      Boolean(seed.dayPlans?.length) &&
+      (place.dayPlans?.length ?? 0) !== seed.dayPlans!.length;
+
+    if (place.isSeed && (seedStopsChanged || seedPlansMissing)) {
+      return {
+        ...place,
+        title: seed.title,
+        badge: seed.badge,
+        status: place.status === 'visited' ? place.status : seed.status,
+        lat: needsPlaceCoords ? seed.lat : place.lat,
+        lng: needsPlaceCoords ? seed.lng : place.lng,
+        stops: structuredClone(seed.stops),
+        dayPlans: structuredClone(seed.dayPlans),
+        notes: seed.notes,
+        mapQuery: seed.mapQuery || place.mapQuery,
+        description: seed.description ?? place.description,
+      };
+    }
+
     const stops =
       place.stops?.map((stop, index) => {
         const seedStop = seed.stops?.[index];
