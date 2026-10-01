@@ -1,71 +1,36 @@
-<section class="hero">
-  <div class="hero__glow" aria-hidden="true"></div>
-  <div class="hero__inner">
-    <p class="hero__brand">Waymark</p>
-    <h1>Your travel planning hub</h1>
-    <p class="hero__lede">
-      Save places, sketch road trips, and tick off where you’ve been — all on this
-      device until you export a backup.
-    </p>
-    <div class="hero__actions">
-      <button type="button" class="btn btn--primary" (click)="openCreate()">
-        Add a spot
+<div class="dash">
+<header class="dash__bar">
+  <p class="dash__brand">Waymark</p>
+  <nav class="dash__nav" aria-label="Dashboard">
+    @for (option of [
+      { id: 'trips', label: 'Trips' },
+      { id: 'places', label: 'Places' },
+      { id: 'map', label: 'Map' },
+      { id: 'kit', label: 'Airbnb kit' }
+    ]; track option.id) {
+      <button
+        type="button"
+        class="chip"
+        [class.chip--active]="view() === option.id"
+        (click)="setView($any(option.id))"
+      >
+        {{ option.label }}
+        @if (option.id === 'kit' && kitPackedCount()) {
+          <span class="chip__count">{{ kitPackedCount() }}/{{ airbnbKit.length }}</span>
+        }
       </button>
-      <a class="btn btn--ghost" href="#airbnb-kit">Airbnb kit</a>
-      <a class="btn btn--ghost" href="#collection">Browse list</a>
-    </div>
-  </div>
-</section>
-
-<app-overview-map [places]="allPlaces()" />
-
-<section class="kit" id="airbnb-kit">
-  <div class="kit__head">
-    <div>
-      <h2>Airbnb kit</h2>
-      <p>Same list for every trip. Check items off while you pack, then clear them before the next stay.</p>
-    </div>
-    <button type="button" class="btn btn--ghost" (click)="resetKit()">Clear checks</button>
-  </div>
-  <ol class="kit__list">
-    @for (item of airbnbKit; track item.id) {
-      <li [class.kit__item--done]="kitChecked()[item.id]">
-        <label>
-          <input
-            type="checkbox"
-            [checked]="kitChecked()[item.id]"
-            (change)="toggleKit(item.id)"
-          />
-          <span>
-            <strong>{{ item.title }}</strong>
-            <span class="kit__detail">{{ item.detail }}</span>
-          </span>
-        </label>
-      </li>
     }
-  </ol>
-</section>
-
-<section class="toolbar" id="collection">
-  <div class="stats">
-    <div class="stat">
-      <span class="stat__value">{{ stats().total }}</span>
-      <span class="stat__label">Saved</span>
-    </div>
-    <div class="stat">
-      <span class="stat__value">{{ stats().planning }}</span>
-      <span class="stat__label">Planning</span>
-    </div>
-    <div class="stat">
-      <span class="stat__value">{{ stats().visited }}</span>
-      <span class="stat__label">Visited</span>
-    </div>
-    <div class="stat">
-      <span class="stat__value">{{ stats().wishlist }}</span>
-      <span class="stat__label">Wishlist</span>
-    </div>
+  </nav>
+  <div class="dash__stats" aria-label="Counts">
+    <span>{{ stats().planning }} planning</span>
+    <span>{{ stats().wishlist }} wishlist</span>
+    <span>{{ stats().visited }} visited</span>
   </div>
+  <button type="button" class="btn btn--primary" (click)="openCreate()">Add a spot</button>
+</header>
 
+@if (view() === 'trips' || view() === 'places') {
+<section class="toolbar" id="collection">
   <div class="controls">
     <label class="search">
       <span class="sr-only">Search places</span>
@@ -96,23 +61,6 @@
       }
     </div>
 
-    <div class="chips" role="group" aria-label="Filter by type">
-      @for (option of [
-        { id: 'all', label: 'Any type' },
-        { id: 'road-trip', label: 'Road trips' },
-        { id: 'standalone', label: 'Standalone' }
-      ]; track option.id) {
-        <button
-          type="button"
-          class="chip"
-          [class.chip--active]="typeFilter() === option.id"
-          (click)="setTypeFilter($any(option.id))"
-        >
-          {{ option.label }}
-        </button>
-      }
-    </div>
-
     <div class="data-actions">
       <button type="button" class="btn btn--small" (click)="exportData()">
         Export
@@ -127,8 +75,43 @@
     </div>
   </div>
 </section>
+}
 
-@if (roadTrips().length) {
+<div class="dash__panel">
+@if (view() === 'map') {
+  <app-overview-map [places]="allPlaces()" />
+}
+
+@if (view() === 'kit') {
+  <section class="kit" id="airbnb-kit">
+    <div class="kit__head">
+      <div>
+        <h2>Airbnb kit</h2>
+        <p>Same list for every trip. Check items off while you pack, then clear them before the next stay.</p>
+      </div>
+      <button type="button" class="btn btn--ghost" (click)="resetKit()">Clear checks</button>
+    </div>
+    <ol class="kit__list">
+      @for (item of airbnbKit; track item.id) {
+        <li [class.kit__item--done]="kitChecked()[item.id]">
+          <label>
+            <input
+              type="checkbox"
+              [checked]="kitChecked()[item.id]"
+              (change)="toggleKit(item.id)"
+            />
+            <span>
+              <strong>{{ item.title }}</strong>
+              <span class="kit__detail">{{ item.detail }}</span>
+            </span>
+          </label>
+        </li>
+      }
+    </ol>
+  </section>
+}
+
+@if (view() === 'trips' && roadTrips().length) {
   <section class="section">
     <div class="section__head">
       <h2>Multi-day road trips</h2>
@@ -249,7 +232,7 @@
   </section>
 }
 
-@if (standalones().length) {
+@if (view() === 'places' && standalones().length) {
   <section class="section">
     <div class="section__head">
       <h2>Standalone destinations</h2>
@@ -322,13 +305,15 @@
   </section>
 }
 
-@if (!places().length) {
+@if ((view() === 'trips' && !roadTrips().length) || (view() === 'places' && !standalones().length)) {
   <section class="empty">
     <h2>Nothing matches</h2>
     <p>Try clearing filters or add a new spot to your hub.</p>
     <button type="button" class="btn btn--primary" (click)="openCreate()">Add a spot</button>
   </section>
 }
+</div>
+</div>
 
 @if (editorOpen()) {
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="editor-title">
