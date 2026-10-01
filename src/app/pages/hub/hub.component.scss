@@ -17,9 +17,10 @@
 }
 
 .dash {
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .dash__bar {
@@ -61,9 +62,72 @@
   font-size: 0.82rem;
 }
 
-.dash__panel {
+.dash__search {
+  width: min(16rem, 100%);
+}
+
+.dash__search input {
+  margin-top: 0;
+}
+
+.dash__body {
   flex: 1;
-  padding-bottom: 2rem;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: 220px minmax(0, 1fr);
+  gap: 0.75rem;
+  padding: 0.75rem 1rem 1rem;
+}
+
+.dash__columns {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: 0.75rem;
+}
+
+.dash__col {
+  min-height: 0;
+  overflow: auto;
+  padding-right: 0.15rem;
+}
+
+.dash__body .section,
+.dash__body .empty {
+  max-width: none;
+  margin: 0;
+  padding: 0 0 1rem;
+}
+
+.drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+}
+
+.drawer__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(28, 45, 42, 0.35);
+}
+
+.drawer__panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: min(440px, 100%);
+  height: 100%;
+  overflow: auto;
+  background: var(--surface);
+  border-left: 1px solid var(--line);
+  padding: 1.25rem;
+  box-shadow: -12px 0 40px rgba(28, 45, 42, 0.12);
+}
+
+.kit__actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
 }
 
 .chip__count {
@@ -830,6 +894,26 @@
   to {
     opacity: 1;
     transform: translate(-50%, 0);
+  }
+}
+
+@media (max-width: 900px) {
+  .dash {
+    height: auto;
+    overflow: visible;
+  }
+
+  .dash__body {
+    display: block;
+  }
+
+  .dash__columns {
+    display: block;
+  }
+
+  .dash__col {
+    overflow: visible;
+    margin-top: 1rem;
   }
 }
 

@@ -11,7 +11,6 @@ const KIT_STORAGE_KEY = 'travel-planning-hub.airbnb-kit';
 
 type FilterStatus = PlaceStatus | 'all';
 type FilterType = PlaceType | 'all';
-type DashboardView = 'trips' | 'places' | 'map' | 'kit';
 
 @Component({
   selector: 'app-hub',
@@ -29,7 +28,7 @@ type DashboardView = 'trips' | 'places' | 'map' | 'kit';
 export class HubComponent {
   private readonly travel = inject(TravelService);
 
-  readonly view = signal<DashboardView>('trips');
+  readonly kitOpen = signal(false);
   readonly query = signal('');
   readonly statusFilter = signal<FilterStatus>('all');
   readonly typeFilter = signal<FilterType>('all');
@@ -61,8 +60,8 @@ export class HubComponent {
     this.places().filter((p) => p.type === 'standalone')
   );
 
-  setView(value: DashboardView): void {
-    this.view.set(value);
+  toggleKitPanel(): void {
+    this.kitOpen.update((open) => !open);
   }
 
   kitPackedCount(): number {

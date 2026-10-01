@@ -1,8 +1,11 @@
 .overview {
-  width: min(1120px, calc(100% - 2rem));
-  margin: 1rem auto 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
   display: grid;
-  gap: 0.75rem;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 0.45rem;
+  min-height: 0;
 }
 
 .overview__head {
@@ -62,7 +65,8 @@
 }
 
 .overview__canvas {
-  height: min(640px, calc(100vh - 9.5rem));
+  height: 100%;
+  min-height: 140px;
   border-radius: 1rem;
   overflow: hidden;
   border: 1px solid var(--line);
