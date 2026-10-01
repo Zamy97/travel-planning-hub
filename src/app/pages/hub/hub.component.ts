@@ -3,8 +3,11 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { OverviewMapComponent } from '../../components/overview-map/overview-map.component';
 import { PlaceMapComponent } from '../../components/place-map/place-map.component';
+import { AIRBNB_KIT } from '../../data/airbnb-kit';
 import { Place, PlaceStatus, PlaceType } from '../../models/travel.model';
 import { PlaceDraft, TravelService } from '../../services/travel.service';
+
+const KIT_STORAGE_KEY = 'travel-planning-hub.airbnb-kit';
 
 type FilterStatus = PlaceStatus | 'all';
 type FilterType = PlaceType | 'all';
@@ -37,6 +40,8 @@ export class HubComponent {
 
   readonly stats = this.travel.stats;
   readonly allPlaces = this.travel.places;
+  readonly airbnbKit = AIRBNB_KIT;
+  readonly kitChecked = signal<Record<string, boolean>>(this.loadKitChecks());
 
   readonly places = computed(() =>
     this.travel.filtered(
@@ -64,6 +69,30 @@ export class HubComponent {
 
   toggleExpand(id: string): void {
     this.expandedId.update((current) => (current === id ? null : id));
+  }
+
+  toggleKit(id: string): void {
+    this.kitChecked.update((current) => {
+      const next = { ...current, [id]: !current[id] };
+      localStorage.setItem(KIT_STORAGE_KEY, JSON.stringify(next));
+      return next;
+    });
+  }
+
+  resetKit(): void {
+    this.kitChecked.set({});
+    localStorage.removeItem(KIT_STORAGE_KEY);
+  }
+
+  private loadKitChecks(): Record<string, boolean> {
+    try {
+      const raw = localStorage.getItem(KIT_STORAGE_KEY);
+      if (!raw) return {};
+      const parsed = JSON.parse(raw) as Record<string, boolean>;
+      return parsed && typeof parsed === 'object' ? parsed : {};
+    } catch {
+      return {};
+    }
   }
 
   cycleStatus(place: Place): void {

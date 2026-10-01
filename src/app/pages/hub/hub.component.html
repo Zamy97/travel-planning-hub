@@ -11,12 +11,40 @@
       <button type="button" class="btn btn--primary" (click)="openCreate()">
         Add a spot
       </button>
+      <a class="btn btn--ghost" href="#airbnb-kit">Airbnb kit</a>
       <a class="btn btn--ghost" href="#collection">Browse list</a>
     </div>
   </div>
 </section>
 
 <app-overview-map [places]="allPlaces()" />
+
+<section class="kit" id="airbnb-kit">
+  <div class="kit__head">
+    <div>
+      <h2>Airbnb kit</h2>
+      <p>Same list for every trip. Check items off while you pack, then clear them before the next stay.</p>
+    </div>
+    <button type="button" class="btn btn--ghost" (click)="resetKit()">Clear checks</button>
+  </div>
+  <ol class="kit__list">
+    @for (item of airbnbKit; track item.id) {
+      <li [class.kit__item--done]="kitChecked()[item.id]">
+        <label>
+          <input
+            type="checkbox"
+            [checked]="kitChecked()[item.id]"
+            (change)="toggleKit(item.id)"
+          />
+          <span>
+            <strong>{{ item.title }}</strong>
+            <span class="kit__detail">{{ item.detail }}</span>
+          </span>
+        </label>
+      </li>
+    }
+  </ol>
+</section>
 
 <section class="toolbar" id="collection">
   <div class="stats">

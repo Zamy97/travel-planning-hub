@@ -41,3 +41,4 @@ npx vercel
 - Maps use **Leaflet + OpenStreetMap** (interactive). Road trips draw a driving route via OSRM when available, with numbered stops and an “Open in Google Maps” link.
 - New custom places are geocoded with OpenStreetMap Nominatim from the map search / title.
 - Shareable Finger Lakes guide: [`/finger-lakes-trip.html`](/finger-lakes-trip.html) or the PDF at [`/finger-lakes-trip.pdf`](/finger-lakes-trip.pdf). Thursday afternoon through Friday, Buffalo by Maghrib.
+- **Airbnb kit** is on the home page for every trip (bodna, flip flops, pan, condiments, plates, and the rest). Checks stay in this browser until you clear them.
