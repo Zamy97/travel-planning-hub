@@ -40,4 +40,4 @@ npx vercel
 - Use **Export** / **Import** to move data between devices or browsers.
 - Maps use **Leaflet + OpenStreetMap** (interactive). Road trips draw a driving route via OSRM when available, with numbered stops and an “Open in Google Maps” link.
 - New custom places are geocoded with OpenStreetMap Nominatim from the map search / title.
-- Shareable Finger Lakes guide (static HTML): after `npm start` or deploy, open [`/finger-lakes-trip.html`](/finger-lakes-trip.html) — Thursday afternoon through Friday, Buffalo by Maghrib. Print → Save as PDF to send to partners.
+- Shareable Finger Lakes guide: [`/finger-lakes-trip.html`](/finger-lakes-trip.html) or the PDF at [`/finger-lakes-trip.pdf`](/finger-lakes-trip.pdf). Thursday afternoon through Friday, Buffalo by Maghrib.
