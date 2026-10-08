@@ -1197,9 +1197,46 @@ export const SEED_PLACES: Place[] = [
         lng: -83.507,
         mapQuery: 'Great Smoky Mountains National Park',
       },
+      {
+        title: 'Valley Bear Farms (Balsam Grove, NC)',
+        detail:
+          'Luxury glamping base near Pisgah / Brevard (~30 min from town). Lodging: glamping cabins, creekside yurts, mirror cabins, A-frames, luxury homes. Amenities: canoeing, sauna/cold plunge, pickleball, playground, disc golf, general store. Enter GPS before leaving Brevard — cell service gets spotty on NC-215. Book ahead for fall foliage.',
+        lat: 35.2227,
+        lng: -82.9251,
+        mapQuery: 'Valley Bear Farms, 218 Bald Rock Rd, Balsam Grove, NC',
+      },
+      {
+        title: 'Courthouse Falls (from Valley Bear)',
+        detail: 'Nearby waterfall chase (~7-mile hike). Strong day hike from the resort.',
+        lat: 35.2714,
+        lng: -82.8931,
+        mapQuery: 'Courthouse Falls North Carolina',
+      },
+      {
+        title: 'Paradise Falls (experienced hikers)',
+        detail: 'Steeper / more committing than the roadside falls — only if the group is solid.',
+        lat: 35.25,
+        lng: -82.95,
+        mapQuery: 'Paradise Falls Balsam Grove NC',
+      },
+      {
+        title: 'Bird Rock Falls (roadside)',
+        detail: 'Easy roadside waterfall stop between bigger hikes.',
+        lat: 35.24,
+        lng: -82.9,
+        mapQuery: 'Bird Rock Falls North Carolina',
+      },
+      {
+        title: 'Blue Ridge Parkway / Black Balsam Knob',
+        detail:
+          'Parkway ~15 min from Valley Bear; Black Balsam ~25 min. Scenic overlook day if you want less gorge hiking. Also near Gorges State Park.',
+        lat: 35.3279,
+        lng: -82.8743,
+        mapQuery: 'Black Balsam Knob North Carolina',
+      },
     ],
     notes:
-      'Future Mid-Atlantic / Appalachian mountains list. Shenandoah Valley + Hawksbill + Harpers Ferry make a tight VA/WV weekend; Dolly Sods and the Smokies are bigger wilderness anchors. Pairs with existing Lookout Mountain / Chattanooga if you push farther south.',
+      'Future Mid-Atlantic / Appalachian mountains list. Northern cluster: Shenandoah Valley + Hawksbill + Harpers Ferry (VA/WV weekend). Mid: Dolly Sods + Poconos. Southern NC/TN: Great Smokies, then Valley Bear Farms in Balsam Grove as a Pisgah / Brevard glamping base with Courthouse Falls, Paradise Falls (experienced), Bird Rock Falls (roadside), and Blue Ridge Parkway / Black Balsam. Pairs with Virginia Appalachian Road Trip (Parkway / AT) and Lookout Mountain / Chattanooga if you keep pushing south.',
     mapQuery: 'Shenandoah National Park',
     lat: 38.293,
     lng: -78.6796,
@@ -1449,7 +1486,7 @@ export const SEED_PLACES: Place[] = [
       },
     ],
     notes:
-      'Favorite nearby escape from the Akron / Cleveland area (~5-hour drive into Virginia). This route threads a National Park (Shenandoah), National Forest, Appalachian Trail highlights, a State Park (Hungry Mother), Breaks Interstate Park, and Blue Ridge Parkway / Skyline Drive scenery. Go early on popular hikes (McAfee Knob, Old Rag, Devil’s Bathtub). Cross-links with Mid-Atlantic Mountains and Shenandoah spots already on the list.',
+      'Favorite nearby escape from the Akron / Cleveland area (~5-hour drive into Virginia). This route threads a National Park (Shenandoah), National Forest, Appalachian Trail highlights, a State Park (Hungry Mother), Breaks Interstate Park, and Blue Ridge Parkway / Skyline Drive scenery. Go early on popular hikes (McAfee Knob, Old Rag, Devil’s Bathtub). Cross-links with Mid-Atlantic Mountains (incl. Valley Bear Farms / Pisgah NC waterfalls after the Smokies) and Shenandoah spots already on the list.',
     mapQuery: 'McAfee Knob Virginia',
     lat: 37.3926,
     lng: -80.0364,
